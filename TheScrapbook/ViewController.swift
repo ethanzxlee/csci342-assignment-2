@@ -83,7 +83,7 @@ class ViewController: UIViewController {
         
         // Search for and print all the clippings that contain the search term 'bar'
         debugPrint("Search for and print all the clippings that contain the search term 'bar'")
-        if let clippingsContainBar = scrapbookModel?.searchClippingContainsNote("bar", inCollection: ) {
+        if let clippingsContainBar = scrapbookModel?.searchClippingContainsNote("bar") {
             for clipping in clippingsContainBar {
                 debugPrint(clipping)
             }
