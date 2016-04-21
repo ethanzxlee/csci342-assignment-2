@@ -13,6 +13,11 @@
 		A157DFC61CC50F4C001D5DEF /* TheScrapbook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A157DFC41CC50F4C001D5DEF /* TheScrapbook.xcdatamodeld */; };
 		A157DFC81CC50F4C001D5DEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A157DFC71CC50F4C001D5DEF /* Assets.xcassets */; };
 		A157DFCB1CC50F4C001D5DEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A157DFC91CC50F4C001D5DEF /* LaunchScreen.storyboard */; };
+		A157DFE71CC51DEE001D5DEF /* Clipping+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157DFE31CC51DEE001D5DEF /* Clipping+CoreDataProperties.swift */; };
+		A157DFE81CC51DEE001D5DEF /* Clipping.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157DFE41CC51DEE001D5DEF /* Clipping.swift */; };
+		A157DFE91CC51DEE001D5DEF /* Collection+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157DFE51CC51DEE001D5DEF /* Collection+CoreDataProperties.swift */; };
+		A157DFEA1CC51DEE001D5DEF /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157DFE61CC51DEE001D5DEF /* Collection.swift */; };
+		A157DFEC1CC51E21001D5DEF /* ScrapbookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157DFEB1CC51E21001D5DEF /* ScrapbookModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,11 @@
 		A157DFC71CC50F4C001D5DEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A157DFCA1CC50F4C001D5DEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A157DFCC1CC50F4C001D5DEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A157DFE31CC51DEE001D5DEF /* Clipping+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Clipping+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A157DFE41CC51DEE001D5DEF /* Clipping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clipping.swift; sourceTree = "<group>"; };
+		A157DFE51CC51DEE001D5DEF /* Collection+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A157DFE61CC51DEE001D5DEF /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
+		A157DFEB1CC51E21001D5DEF /* ScrapbookModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrapbookModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +66,28 @@
 		A157DFBC1CC50F4C001D5DEF /* TheScrapbook */ = {
 			isa = PBXGroup;
 			children = (
-				A157DFBD1CC50F4C001D5DEF /* AppDelegate.swift */,
-				A157DFBF1CC50F4C001D5DEF /* ViewController.swift */,
-				A157DFC11CC50F4C001D5DEF /* Main.storyboard */,
 				A157DFC71CC50F4C001D5DEF /* Assets.xcassets */,
+				A157DFC11CC50F4C001D5DEF /* Main.storyboard */,
 				A157DFC91CC50F4C001D5DEF /* LaunchScreen.storyboard */,
-				A157DFCC1CC50F4C001D5DEF /* Info.plist */,
 				A157DFC41CC50F4C001D5DEF /* TheScrapbook.xcdatamodeld */,
+				A157DFCC1CC50F4C001D5DEF /* Info.plist */,
+				A157DFBD1CC50F4C001D5DEF /* AppDelegate.swift */,
+				A157DFDE1CC51D7D001D5DEF /* CoreDataModel */,
+				A157DFEB1CC51E21001D5DEF /* ScrapbookModel.swift */,
+				A157DFBF1CC50F4C001D5DEF /* ViewController.swift */,
 			);
 			path = TheScrapbook;
+			sourceTree = "<group>";
+		};
+		A157DFDE1CC51D7D001D5DEF /* CoreDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				A157DFE31CC51DEE001D5DEF /* Clipping+CoreDataProperties.swift */,
+				A157DFE41CC51DEE001D5DEF /* Clipping.swift */,
+				A157DFE51CC51DEE001D5DEF /* Collection+CoreDataProperties.swift */,
+				A157DFE61CC51DEE001D5DEF /* Collection.swift */,
+			);
+			name = CoreDataModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,8 +163,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A157DFC01CC50F4C001D5DEF /* ViewController.swift in Sources */,
+				A157DFE81CC51DEE001D5DEF /* Clipping.swift in Sources */,
 				A157DFBE1CC50F4C001D5DEF /* AppDelegate.swift in Sources */,
+				A157DFE91CC51DEE001D5DEF /* Collection+CoreDataProperties.swift in Sources */,
+				A157DFEC1CC51E21001D5DEF /* ScrapbookModel.swift in Sources */,
 				A157DFC61CC50F4C001D5DEF /* TheScrapbook.xcdatamodeld in Sources */,
+				A157DFEA1CC51DEE001D5DEF /* Collection.swift in Sources */,
+				A157DFE71CC51DEE001D5DEF /* Clipping+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +319,7 @@
 				A157DFD11CC50F4C001D5DEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
