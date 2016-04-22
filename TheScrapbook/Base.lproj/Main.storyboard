@@ -1,26 +1,112 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gju-Fm-q84">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--TheScrapbook-->
+        <scene sceneID="t4f-6m-SXg">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TheScrapbook" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                <tableViewController id="N98-Vb-zXU" customClass="CollectionListViewController" customModule="TheScrapbook" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" id="gf6-k8-ivH">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CollectionCell" id="usd-JX-v6M" customClass="CollectionTableViewCell" customModule="TheScrapbook" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="usd-JX-v6M" id="t9x-xw-LfB">
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="260" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Collection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hz5-RO-BY4">
+                                            <rect key="frame" x="14" y="16" width="539" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.30309131741523743" green="0.20383550226688385" blue="0.42423218488693237" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Hz5-RO-BY4" secondAttribute="bottom" constant="8" id="31F-y7-Mzc"/>
+                                        <constraint firstItem="Hz5-RO-BY4" firstAttribute="leading" secondItem="t9x-xw-LfB" secondAttribute="leadingMargin" constant="6" id="UYK-Sv-qOq"/>
+                                        <constraint firstItem="Hz5-RO-BY4" firstAttribute="top" secondItem="t9x-xw-LfB" secondAttribute="topMargin" constant="8" id="bKY-sM-Win"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Hz5-RO-BY4" secondAttribute="trailing" constant="6" id="oLQ-7E-HuK"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="titleLabel" destination="Hz5-RO-BY4" id="isd-xr-a1j"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="N98-Vb-zXU" id="VvP-Zd-Z1G"/>
+                            <outlet property="delegate" destination="N98-Vb-zXU" id="xt0-Jh-1lb"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="eaj-3N-NQs"/>
+                        <barButtonItem title="New Collection" id="Te4-cl-5sM">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="didTouchNewCollectionButton:" destination="N98-Vb-zXU" id="u77-e7-srq"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="20I-Py-e2p"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="TheScrapbook" id="xVe-gD-KlB">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="prg-uW-8cH">
+                            <connections>
+                                <action selector="didTouchEditButton:" destination="N98-Vb-zXU" id="45A-Cv-Q4Y"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="editBarButtonItem" destination="prg-uW-8cH" id="soM-k7-mNU"/>
+                        <outlet property="newCollectionBarButtonItem" destination="Te4-cl-5sM" id="a12-DM-AFf"/>
+                        <outlet property="searchDisplayController" destination="jYD-Cj-Rp1" id="T2u-cl-R0E"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g4L-TG-GPm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="jYD-Cj-Rp1">
+                    <connections>
+                        <outlet property="delegate" destination="N98-Vb-zXU" id="hd4-rl-46Q"/>
+                        <outlet property="searchContentsController" destination="N98-Vb-zXU" id="CFx-Wx-uAZ"/>
+                        <outlet property="searchResultsDataSource" destination="N98-Vb-zXU" id="0O6-5j-gbc"/>
+                        <outlet property="searchResultsDelegate" destination="N98-Vb-zXU" id="uG1-ny-hJf"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
+            <point key="canvasLocation" x="1356" y="405"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hij-l5-DJY">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="gju-Fm-q84" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="k2r-Ce-Ag7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.27058823529411763" green="0.16470588235294117" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" id="Tqe-cQ-cnU">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.91812341129739983" green="0.9014251803401182" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.078163623809814453" green="0.05016414076089859" blue="0.11242476850748062" alpha="0.75" colorSpace="calibratedRGB"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="N98-Vb-zXU" kind="relationship" relationship="rootViewController" id="G0R-W7-Ve8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DkP-7U-myK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="544" y="405"/>
         </scene>
     </scenes>
+    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
