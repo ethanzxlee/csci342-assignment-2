@@ -3,10 +3,11 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--TheScrapbook-->
+        <!--Collections-->
         <scene sceneID="t4f-6m-SXg">
             <objects>
                 <tableViewController id="N98-Vb-zXU" customClass="CollectionListViewController" customModule="TheScrapbook" customModuleProvider="target" sceneMemberID="viewController">
@@ -39,6 +40,7 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="titleLabel" destination="Hz5-RO-BY4" id="isd-xr-a1j"/>
+                                    <segue destination="p8y-7d-GTb" kind="show" identifier="ShowClippingListViewController" id="b23-iv-tR9"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -57,7 +59,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="20I-Py-e2p"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="TheScrapbook" id="xVe-gD-KlB">
+                    <navigationItem key="navigationItem" title="Collections" id="xVe-gD-KlB">
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="prg-uW-8cH">
                             <connections>
                                 <action selector="didTouchEditButton:" destination="N98-Vb-zXU" id="45A-Cv-Q4Y"/>
@@ -81,6 +83,124 @@
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1356" y="405"/>
+        </scene>
+        <!--Clippings-->
+        <scene sceneID="Unn-1t-yYf">
+            <objects>
+                <tableViewController id="p8y-7d-GTb" customClass="ClippingListViewController" customModule="TheScrapbook" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="BCV-Mz-xcW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="2g5-ek-g1Q">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2g5-ek-g1Q" id="mox-Nj-Nwf">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="p8y-7d-GTb" id="DF4-iD-uWx"/>
+                            <outlet property="delegate" destination="p8y-7d-GTb" id="bEM-gu-Kty"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="0KY-uI-R92"/>
+                        <barButtonItem title="New Clipping" id="Agg-2o-t8h">
+                            <connections>
+                                <action selector="didTouchNewClippingButton:" destination="p8y-7d-GTb" id="LVA-zz-jTH"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="kEd-OT-DrQ"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Clippings" id="wrI-fq-Z9U">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="9Z2-Ho-kbu"/>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="K9H-aG-eU5" kind="show" identifier="ShowClippingDetailViewController" id="S0G-Lt-3rI"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rIS-Tu-Whh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2523" y="405"/>
+        </scene>
+        <!--Clipping Detail View Controller-->
+        <scene sceneID="aiw-fA-AfL">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="K9H-aG-eU5" customClass="ClippingDetailViewController" customModule="TheScrapbook" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="A1u-63-LmH"/>
+                        <viewControllerLayoutGuide type="bottom" id="CGx-7v-U4b"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zQB-x0-dx2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="iwy-bx-0CT">
+                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ski-oc-CsW">
+                                        <rect key="frame" x="10" y="8" width="580" height="435"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="ski-oc-CsW" secondAttribute="height" multiplier="4:3" priority="750" id="C2D-FZ-saZ"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created on 22/04/2016 20:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tQm-b7-fke">
+                                        <rect key="frame" x="15" y="453" width="157" height="14"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TKH-a0-OXQ">
+                                        <rect key="frame" x="10" y="467" width="580" height="163"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ski-oc-CsW" firstAttribute="centerX" secondItem="iwy-bx-0CT" secondAttribute="centerX" id="0yF-ce-mV1"/>
+                                    <constraint firstItem="tQm-b7-fke" firstAttribute="leading" secondItem="iwy-bx-0CT" secondAttribute="leading" constant="15" id="5UC-0d-Ajf"/>
+                                    <constraint firstItem="TKH-a0-OXQ" firstAttribute="leading" secondItem="iwy-bx-0CT" secondAttribute="leading" constant="10" id="5cO-iR-pjp"/>
+                                    <constraint firstItem="ski-oc-CsW" firstAttribute="height" secondItem="iwy-bx-0CT" secondAttribute="height" priority="250" id="Add-Sv-oym"/>
+                                    <constraint firstItem="tQm-b7-fke" firstAttribute="top" secondItem="ski-oc-CsW" secondAttribute="bottom" constant="10" id="Akl-NQ-bFs"/>
+                                    <constraint firstAttribute="bottom" secondItem="TKH-a0-OXQ" secondAttribute="bottom" constant="10" id="J3p-xL-AFu"/>
+                                    <constraint firstItem="ski-oc-CsW" firstAttribute="top" secondItem="iwy-bx-0CT" secondAttribute="top" constant="8" id="PdS-4P-7F6"/>
+                                    <constraint firstItem="ski-oc-CsW" firstAttribute="width" secondItem="iwy-bx-0CT" secondAttribute="width" constant="-20" id="Rx9-0F-50h"/>
+                                    <constraint firstAttribute="trailing" secondItem="TKH-a0-OXQ" secondAttribute="trailing" constant="10" id="gTc-q1-V24"/>
+                                    <constraint firstItem="TKH-a0-OXQ" firstAttribute="width" secondItem="iwy-bx-0CT" secondAttribute="width" constant="-20" id="oJk-Oq-IU3"/>
+                                    <constraint firstItem="TKH-a0-OXQ" firstAttribute="top" secondItem="tQm-b7-fke" secondAttribute="bottom" id="stq-gu-xW3"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="K9H-aG-eU5" id="kCD-Os-bhQ"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="iwy-bx-0CT" firstAttribute="leading" secondItem="zQB-x0-dx2" secondAttribute="leadingMargin" constant="-20" id="DjB-Ky-uid"/>
+                            <constraint firstItem="iwy-bx-0CT" firstAttribute="top" secondItem="A1u-63-LmH" secondAttribute="bottom" id="ais-re-aKx"/>
+                            <constraint firstItem="CGx-7v-U4b" firstAttribute="top" secondItem="iwy-bx-0CT" secondAttribute="bottom" id="ugJ-NY-XfS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="iwy-bx-0CT" secondAttribute="trailing" constant="-20" id="zt0-yF-QDI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="at0-KA-YWz"/>
+                    <connections>
+                        <outlet property="createdDateLabel" destination="tQm-b7-fke" id="tW0-vE-ZGl"/>
+                        <outlet property="imageView" destination="ski-oc-CsW" id="i1h-Ej-jDu"/>
+                        <outlet property="imageViewAspectConstraint" destination="C2D-FZ-saZ" id="biS-PP-zaG"/>
+                        <outlet property="imageViewEqualHeightConstraint" destination="Add-Sv-oym" id="Fhb-tN-f9x"/>
+                        <outlet property="noteTextView" destination="TKH-a0-OXQ" id="dD9-1Q-YmT"/>
+                        <outlet property="scrollView" destination="iwy-bx-0CT" id="4D7-9k-hCG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rdx-O1-YI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3365" y="381"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hij-l5-DJY">

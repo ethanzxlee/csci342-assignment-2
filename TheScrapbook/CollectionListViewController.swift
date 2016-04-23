@@ -151,6 +151,24 @@ class CollectionListViewController: UITableViewController {
     @IBAction func didTouchEditButton(sender: UIBarButtonItem) {
         toogleTableEditing()
     }
+
+    
+    // MARK: - Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "ShowClippingListViewController") {
+            guard let clippingNavController = segue.destinationViewController as? UINavigationController else {
+                return
+            }
+            
+            guard let clippingListViewController = clippingNavController.childViewControllers.first as? ClippingListViewController else {
+                return
+            }
+            
+            if (tableView.indexPathForSelectedRow?.section == 0 && tableView.indexPathForSelectedRow?.row > 0) {
+                clippingListViewController.collection = collections![(tableView.indexPathForSelectedRow?.row)! - 1]
+            }
+        }
+    }
     
     
     // MARK: - Functions
