@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A13835861CCB256F0044BD20 /* ClippingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13835851CCB256F0044BD20 /* ClippingDetailViewController.swift */; };
+		A13835881CCB52050044BD20 /* ClippingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13835871CCB52050044BD20 /* ClippingListTableViewCell.swift */; };
 		A13ED9E61CC913F500CE2FED /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13ED9E51CC913F500CE2FED /* CollectionTableViewCell.swift */; };
 		A13ED9E81CC9C3E200CE2FED /* EmptyTableViewBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13ED9E71CC9C3E200CE2FED /* EmptyTableViewBackgroundView.swift */; };
 		A13ED9EE1CCA450D00CE2FED /* ClippingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13ED9ED1CCA450D00CE2FED /* ClippingListViewController.swift */; };
-		A13ED9F01CCA62D700CE2FED /* ClippingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13ED9EF1CCA62D700CE2FED /* ClippingDetailViewController.swift */; };
 		A157DFBE1CC50F4C001D5DEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157DFBD1CC50F4C001D5DEF /* AppDelegate.swift */; };
 		A157DFC01CC50F4C001D5DEF /* CollectionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157DFBF1CC50F4C001D5DEF /* CollectionListViewController.swift */; };
 		A157DFC31CC50F4C001D5DEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A157DFC11CC50F4C001D5DEF /* Main.storyboard */; };
@@ -25,10 +26,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A13835851CCB256F0044BD20 /* ClippingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClippingDetailViewController.swift; sourceTree = "<group>"; };
+		A13835871CCB52050044BD20 /* ClippingListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClippingListTableViewCell.swift; sourceTree = "<group>"; };
 		A13ED9E51CC913F500CE2FED /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTableViewCell.swift; sourceTree = "<group>"; };
 		A13ED9E71CC9C3E200CE2FED /* EmptyTableViewBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTableViewBackgroundView.swift; sourceTree = "<group>"; };
 		A13ED9ED1CCA450D00CE2FED /* ClippingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClippingListViewController.swift; sourceTree = "<group>"; };
-		A13ED9EF1CCA62D700CE2FED /* ClippingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClippingDetailViewController.swift; sourceTree = "<group>"; };
 		A157DFBA1CC50F4C001D5DEF /* TheScrapbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheScrapbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A157DFBD1CC50F4C001D5DEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A157DFBF1CC50F4C001D5DEF /* CollectionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListViewController.swift; sourceTree = "<group>"; };
@@ -58,9 +60,9 @@
 		A13ED9EB1CCA25FB00CE2FED /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				A13835851CCB256F0044BD20 /* ClippingDetailViewController.swift */,
 				A157DFBF1CC50F4C001D5DEF /* CollectionListViewController.swift */,
 				A13ED9ED1CCA450D00CE2FED /* ClippingListViewController.swift */,
-				A13ED9EF1CCA62D700CE2FED /* ClippingDetailViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -70,6 +72,7 @@
 			children = (
 				A13ED9E51CC913F500CE2FED /* CollectionTableViewCell.swift */,
 				A13ED9E71CC9C3E200CE2FED /* EmptyTableViewBackgroundView.swift */,
+				A13835871CCB52050044BD20 /* ClippingListTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -191,7 +194,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A13ED9E81CC9C3E200CE2FED /* EmptyTableViewBackgroundView.swift in Sources */,
-				A13ED9F01CCA62D700CE2FED /* ClippingDetailViewController.swift in Sources */,
+				A13835861CCB256F0044BD20 /* ClippingDetailViewController.swift in Sources */,
 				A157DFC01CC50F4C001D5DEF /* CollectionListViewController.swift in Sources */,
 				A157DFE81CC51DEE001D5DEF /* Clipping.swift in Sources */,
 				A13ED9EE1CCA450D00CE2FED /* ClippingListViewController.swift in Sources */,
@@ -199,6 +202,7 @@
 				A157DFE91CC51DEE001D5DEF /* Collection+CoreDataProperties.swift in Sources */,
 				A157DFEC1CC51E21001D5DEF /* ScrapbookModel.swift in Sources */,
 				A157DFC61CC50F4C001D5DEF /* TheScrapbook.xcdatamodeld in Sources */,
+				A13835881CCB52050044BD20 /* ClippingListTableViewCell.swift in Sources */,
 				A157DFEA1CC51DEE001D5DEF /* Collection.swift in Sources */,
 				A13ED9E61CC913F500CE2FED /* CollectionTableViewCell.swift in Sources */,
 				A157DFE71CC51DEE001D5DEF /* Clipping+CoreDataProperties.swift in Sources */,

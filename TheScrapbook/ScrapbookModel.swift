@@ -135,12 +135,35 @@ class ScrapbookModel {
     
     
     /**
-     Fetch all the clipping.
+        Fetch all the clipping.
      
-     - Returns: An array of Clipping, otherwise nil if the fetch request failed
+        - Returns: An array of Clipping, otherwise nil if the fetch request failed
      */
     func fetchAllClippings() -> [Clipping]? {
         let fetchRequest = NSFetchRequest(entityName: "Clipping")
+        
+        do {
+            return try self.managedObjectContext?.executeFetchRequest(fetchRequest) as? [Clipping]
+        }
+        catch {
+            return nil
+        }
+    }
+    
+    
+    /**
+        Fetch all the clipping in the specified collection
+     
+        - Parameters:
+            - collection: The collection to be searched
+     
+        - Returns: An array of Clipping, otherwise nil if the fetch request failed
+     */
+    func fetchAllClippingsInCollection(collection: Collection) -> [Clipping]? {
+        let predicate = NSPredicate(format: "belongsTo = %@", collection)
+        
+        let fetchRequest = NSFetchRequest(entityName: "Clipping")
+        fetchRequest.predicate = predicate
         
         do {
             return try self.managedObjectContext?.executeFetchRequest(fetchRequest) as? [Clipping]

@@ -31,6 +31,10 @@ class CollectionListViewController: UITableViewController {
         
         // Hides the dividers for empty cells
         tableView.tableFooterView = UIView(frame: CGRect.zero)
+        
+        navigationController?.navigationBar.translucent = true
+        navigationController?.navigationBar.barStyle = .Black
+        navigationController?.navigationBar.barTintColor = UIColor(red: 0x4D / 255, green: 0x36 / 255, blue: 0x6C / 255, alpha: 1)
     }
     
     
@@ -156,11 +160,7 @@ class CollectionListViewController: UITableViewController {
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "ShowClippingListViewController") {
-            guard let clippingNavController = segue.destinationViewController as? UINavigationController else {
-                return
-            }
-            
-            guard let clippingListViewController = clippingNavController.childViewControllers.first as? ClippingListViewController else {
+            guard let clippingListViewController = segue.destinationViewController as? ClippingListViewController else {
                 return
             }
             

@@ -12,27 +12,72 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
     
     let scrapbookModel = ScrapbookModel.defaultModel
     var collection: Collection?
+    var clippings = [Clipping]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+    
+        if (collection == nil) {
+            if let allClippings = scrapbookModel?.fetchAllClippings() {
+                clippings.appendContentsOf(allClippings)
+            }
+        }
+        else {
+            if let fetchedClippings = scrapbookModel?.fetchAllClippingsInCollection(collection!) {
+                clippings.appendContentsOf(fetchedClippings)
+            }
+        }
+        
     }
     
-    override func viewDidAppear(animated: Bool) {
-        navigationController?.setToolbarHidden(false, animated: true)
-        
-
-    }
-
-    // MARK: - Table view data source
+    // MARK: - UITableViewController
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        if (tableView == self.tableView) {
+            return 1
+        }
+        else {
+            return 0
+        }
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        if (tableView == self.tableView) {
+            switch (section) {
+            case 0:
+                return clippings.count
+            default:
+                return 0
+            }
+        }
+        else {
+            return 0
+        }
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if (tableView == self.tableView) {
+            
+            switch (indexPath.section) {
+            case 0:
+                guard let cell = tableView.dequeueReusableCellWithIdentifier("ClippingListTableViewCell") as? ClippingListTableViewCell else {
+                    return UITableViewCell()
+                }
+                print(clippings[indexPath.row].image!)
+                
+                cell.clippingImageView.image = UIImage(contentsOfFile: clippings[indexPath.row].image!)
+                cell.clippingNoteLabel?.text = clippings[indexPath.row].note
+                
+                return cell
+                
+            default:
+                return UITableViewCell()
+            }
+        }
+        else {
+            return UITableViewCell()
+        }
     }
     
     
@@ -57,11 +102,21 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "ShowClippingDetailViewController") {
-            guard let clippingDetailViewController = segue.destinationViewController as? ClippingDetailViewController else {
+            guard let clippingDetailNavController = segue.destinationViewController as? UINavigationController else {
                 return
             }
-            clippingDetailViewController.image = selectedImage
+            
+            guard let clippingDetailViewController = clippingDetailNavController.childViewControllers.first as? ClippingDetailViewController else {
+                return
+            }
+            
+            clippingDetailViewController.collection = self.collection
+            clippingDetailViewController.image = self.selectedImage
         }
+    }
+    
+    @IBAction func unwindToClippingListViewController(segue: UIStoryboardSegue) {
+        
     }
 
 
@@ -112,6 +167,9 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
         
         picker.sourceType = sourceType
         picker.delegate = self
+        picker.navigationBar.barStyle = .Black
+        picker.navigationBar.barTintColor = UIColor(red: 0x4D / 255, green: 0x36 / 255, blue: 0x6C / 255, alpha: 1)
+        picker.navigationBar.tintColor = UIColor.whiteColor()
         
         self.presentViewController(picker, animated: true, completion: nil)
     }

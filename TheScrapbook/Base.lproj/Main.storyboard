@@ -69,18 +69,9 @@
                     <connections>
                         <outlet property="editBarButtonItem" destination="prg-uW-8cH" id="soM-k7-mNU"/>
                         <outlet property="newCollectionBarButtonItem" destination="Te4-cl-5sM" id="a12-DM-AFf"/>
-                        <outlet property="searchDisplayController" destination="jYD-Cj-Rp1" id="T2u-cl-R0E"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g4L-TG-GPm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="jYD-Cj-Rp1">
-                    <connections>
-                        <outlet property="delegate" destination="N98-Vb-zXU" id="hd4-rl-46Q"/>
-                        <outlet property="searchContentsController" destination="N98-Vb-zXU" id="CFx-Wx-uAZ"/>
-                        <outlet property="searchResultsDataSource" destination="N98-Vb-zXU" id="0O6-5j-gbc"/>
-                        <outlet property="searchResultsDelegate" destination="N98-Vb-zXU" id="uG1-ny-hJf"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1356" y="405"/>
         </scene>
@@ -92,12 +83,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" translucent="NO" id="pbK-Hm-H4U">
+                            <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="barTintColor" red="0.3030913174" green="0.2038355023" blue="0.42423218489999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="p8y-7d-GTb" id="3OC-BA-9n2"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="2g5-ek-g1Q">
-                                <rect key="frame" x="0.0" y="92" width="600" height="64"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ClippingListTableViewCell" id="2g5-ek-g1Q" customClass="ClippingListTableViewCell" customModule="TheScrapbook" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="136" width="600" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2g5-ek-g1Q" id="mox-Nj-Nwf">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="63"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="63"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KN4-OO-8Wz">
@@ -108,7 +108,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1s-NX-4xc">
-                                            <rect key="frame" x="72" y="21" width="42" height="21"/>
+                                            <rect key="frame" x="74" y="21" width="518" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.3030913174" green="0.2038355023" blue="0.42423218489999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -117,10 +117,15 @@
                                     <constraints>
                                         <constraint firstItem="KN4-OO-8Wz" firstAttribute="centerY" secondItem="mox-Nj-Nwf" secondAttribute="centerY" id="CLs-OI-tRq"/>
                                         <constraint firstItem="h1s-NX-4xc" firstAttribute="centerY" secondItem="mox-Nj-Nwf" secondAttribute="centerY" id="J4N-Cg-8y8"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="h1s-NX-4xc" secondAttribute="trailing" id="r2G-yX-E9M"/>
                                         <constraint firstItem="KN4-OO-8Wz" firstAttribute="leading" secondItem="mox-Nj-Nwf" secondAttribute="leadingMargin" constant="8" id="s6u-3G-pNx"/>
                                         <constraint firstItem="h1s-NX-4xc" firstAttribute="leading" secondItem="KN4-OO-8Wz" secondAttribute="trailing" constant="10" id="zzm-bA-Mb3"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="clippingImageView" destination="KN4-OO-8Wz" id="a80-zm-nLq"/>
+                                    <outlet property="clippingNoteLabel" destination="h1s-NX-4xc" id="a1S-73-rT7"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -141,10 +146,20 @@
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="9Z2-Ho-kbu"/>
                     </navigationItem>
                     <connections>
-                        <segue destination="K9H-aG-eU5" kind="show" identifier="ShowClippingDetailViewController" id="S0G-Lt-3rI"/>
+                        <outlet property="searchDisplayController" destination="xEn-cT-rXy" id="Y4K-Dg-kl7"/>
+                        <segue destination="hxf-Ev-S2i" kind="showDetail" identifier="ShowClippingDetailViewController" action="showViewController:sender:" id="S0G-Lt-3rI"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rIS-Tu-Whh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="xEn-cT-rXy">
+                    <connections>
+                        <outlet property="delegate" destination="p8y-7d-GTb" id="fVj-Ud-lly"/>
+                        <outlet property="searchBar" destination="pbK-Hm-H4U" id="eX5-rn-z7h"/>
+                        <outlet property="searchContentsController" destination="p8y-7d-GTb" id="jzh-r0-hov"/>
+                        <outlet property="searchResultsDataSource" destination="p8y-7d-GTb" id="agK-ml-kJj"/>
+                        <outlet property="searchResultsDelegate" destination="p8y-7d-GTb" id="uz5-AW-cpk"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="2523" y="405"/>
         </scene>
@@ -160,7 +175,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="iwy-bx-0CT">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="iwy-bx-0CT">
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ski-oc-CsW">
@@ -175,14 +190,16 @@
                                             <constraint firstAttribute="height" priority="1" id="1qi-aZ-MzG"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.45882352939999999" green="0.33725490200000002" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" scrollEnabled="NO" delaysContentTouches="NO" text="Type your notes here " translatesAutoresizingMaskIntoConstraints="NO" id="TKH-a0-OXQ">
                                         <rect key="frame" x="10" y="467" width="580" height="37"/>
+                                        <color key="tintColor" red="0.45882352939999999" green="0.33725490200000002" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="1" id="44p-zR-0jP"/>
                                         </constraints>
+                                        <color key="textColor" red="0.3030913174" green="0.2038355023" blue="0.42423218489999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -214,11 +231,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="at0-KA-YWz">
+                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="ihx-yo-TjE">
+                            <connections>
+                                <segue destination="eAY-e5-jau" kind="unwind" unwindAction="unwindToClippingListViewController:" id="BNB-Cd-l7R"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="TZM-23-H9G"/>
                     </navigationItem>
                     <connections>
                         <outlet property="createdDateLabel" destination="tQm-b7-fke" id="tW0-vE-ZGl"/>
                         <outlet property="dateCreatedLabelZeroHeightConstraint" destination="1qi-aZ-MzG" id="SIr-aq-ZSR"/>
+                        <outlet property="deleteBarButtonItem" destination="TZM-23-H9G" id="ZwJ-XC-jlh"/>
+                        <outlet property="didTouchDeleteBarButtonItem" destination="TZM-23-H9G" id="BYZ-fX-vr3"/>
                         <outlet property="imageView" destination="ski-oc-CsW" id="i1h-Ej-jDu"/>
                         <outlet property="imageViewAspectConstraint" destination="C2D-FZ-saZ" id="biS-PP-zaG"/>
                         <outlet property="imageViewEqualHeightConstraint" destination="Add-Sv-oym" id="Fhb-tN-f9x"/>
@@ -231,8 +255,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rdx-O1-YI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="eAY-e5-jau" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3354" y="405"/>
+            <point key="canvasLocation" x="4166" y="405"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hij-l5-DJY">
@@ -258,6 +283,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DkP-7U-myK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="544" y="405"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="6rI-sf-NQr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hxf-Ev-S2i" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="l6w-xs-hwe">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.30196078431372547" green="0.20392156862745098" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="K9H-aG-eU5" kind="relationship" relationship="rootViewController" id="tCb-Nl-MFh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NUB-ur-r6F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3354" y="405"/>
         </scene>
     </scenes>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
