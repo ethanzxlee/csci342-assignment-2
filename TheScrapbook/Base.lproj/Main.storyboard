@@ -88,17 +88,38 @@
         <scene sceneID="Unn-1t-yYf">
             <objects>
                 <tableViewController id="p8y-7d-GTb" customClass="ClippingListViewController" customModule="TheScrapbook" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="BCV-Mz-xcW">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="28" sectionFooterHeight="28" id="BCV-Mz-xcW">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="2g5-ek-g1Q">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2g5-ek-g1Q" id="mox-Nj-Nwf">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="63"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KN4-OO-8Wz">
+                                            <rect key="frame" x="16" y="8" width="48" height="48"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="48" id="j3p-bQ-e28"/>
+                                                <constraint firstAttribute="width" constant="48" id="vTr-qq-fOv"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1s-NX-4xc">
+                                            <rect key="frame" x="72" y="21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.3030913174" green="0.2038355023" blue="0.42423218489999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="KN4-OO-8Wz" firstAttribute="centerY" secondItem="mox-Nj-Nwf" secondAttribute="centerY" id="CLs-OI-tRq"/>
+                                        <constraint firstItem="h1s-NX-4xc" firstAttribute="centerY" secondItem="mox-Nj-Nwf" secondAttribute="centerY" id="J4N-Cg-8y8"/>
+                                        <constraint firstItem="KN4-OO-8Wz" firstAttribute="leading" secondItem="mox-Nj-Nwf" secondAttribute="leadingMargin" constant="8" id="s6u-3G-pNx"/>
+                                        <constraint firstItem="h1s-NX-4xc" firstAttribute="leading" secondItem="KN4-OO-8Wz" secondAttribute="trailing" constant="10" id="zzm-bA-Mb3"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -142,7 +163,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="iwy-bx-0CT">
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ski-oc-CsW">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ski-oc-CsW">
                                         <rect key="frame" x="10" y="8" width="580" height="435"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ski-oc-CsW" secondAttribute="height" multiplier="4:3" priority="750" id="C2D-FZ-saZ"/>
@@ -150,14 +171,18 @@
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created on 22/04/2016 20:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tQm-b7-fke">
                                         <rect key="frame" x="15" y="453" width="157" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="1" id="1qi-aZ-MzG"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TKH-a0-OXQ">
-                                        <rect key="frame" x="10" y="467" width="580" height="163"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" scrollEnabled="NO" delaysContentTouches="NO" text="Type your notes here " translatesAutoresizingMaskIntoConstraints="NO" id="TKH-a0-OXQ">
+                                        <rect key="frame" x="10" y="467" width="580" height="37"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="1" id="44p-zR-0jP"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -188,19 +213,26 @@
                             <constraint firstAttribute="trailingMargin" secondItem="iwy-bx-0CT" secondAttribute="trailing" constant="-20" id="zt0-yF-QDI"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="at0-KA-YWz"/>
+                    <navigationItem key="navigationItem" id="at0-KA-YWz">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="TZM-23-H9G"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="createdDateLabel" destination="tQm-b7-fke" id="tW0-vE-ZGl"/>
+                        <outlet property="dateCreatedLabelZeroHeightConstraint" destination="1qi-aZ-MzG" id="SIr-aq-ZSR"/>
                         <outlet property="imageView" destination="ski-oc-CsW" id="i1h-Ej-jDu"/>
                         <outlet property="imageViewAspectConstraint" destination="C2D-FZ-saZ" id="biS-PP-zaG"/>
                         <outlet property="imageViewEqualHeightConstraint" destination="Add-Sv-oym" id="Fhb-tN-f9x"/>
+                        <outlet property="imageViewEqualWidthConstraint" destination="Rx9-0F-50h" id="tI2-QK-s2w"/>
+                        <outlet property="imageViewTopContraint" destination="PdS-4P-7F6" id="Bjr-Ju-BDN"/>
                         <outlet property="noteTextView" destination="TKH-a0-OXQ" id="dD9-1Q-YmT"/>
+                        <outlet property="noteTextViewZeroHeightConstraint" destination="44p-zR-0jP" id="Lc6-DY-l88"/>
                         <outlet property="scrollView" destination="iwy-bx-0CT" id="4D7-9k-hCG"/>
+                        <outlet property="scrollViewBottomConstraint" destination="ugJ-NY-XfS" id="2PH-3n-5Tp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rdx-O1-YI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3365" y="381"/>
+            <point key="canvasLocation" x="3354" y="405"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hij-l5-DJY">
