@@ -12,6 +12,7 @@ class CollectionListViewController: UITableViewController {
 
     let scrapbookModel = ScrapbookModel.defaultModel
     var collections: [Collection]?
+    var clippings: [Clipping]?
     
     let emptyTableImage = UIImage(named: "empty-collection")
     let emptyTableMessage = NSLocalizedString("You don't have any collections yet.", comment: "Empty collection message")
@@ -24,6 +25,7 @@ class CollectionListViewController: UITableViewController {
     override func viewDidLoad() {
         // Prepare our Collections
         collections = scrapbookModel?.fetchAllCollections()
+        clippings = scrapbookModel?.fetchAllClippings()
         
         // Setup the background that will be used when the table is empty
         emptyTableBackgroundView = EmptyTableViewBackgroundView(image: emptyTableImage, message: emptyTableMessage)
@@ -43,7 +45,7 @@ class CollectionListViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch (section) {
         case 0:
-            guard let _collections = collections else {
+            guard let _clippings = clippings else {
                 // Show the background
                 emptyTableBackgroundView?.show()
                 tableView.separatorStyle = .None
@@ -51,12 +53,27 @@ class CollectionListViewController: UITableViewController {
                 return 0
             }
             
-            if (_collections.count == 0) {
+            guard let _collections = collections else {
+                emptyTableBackgroundView?.show()
+                tableView.separatorStyle = .None
+                editBarButtonItem.enabled = false
+                return 0
+
+            }
+            
+            if (_clippings.count == 0  && _collections.count == 0) {
                 // Show the background when the table is empty
                 emptyTableBackgroundView?.show()
                 tableView.separatorStyle = .None
                 editBarButtonItem.enabled = false
                 return 0
+            }
+            else if (_clippings.count > 0 && _collections.count == 0) {
+                // Hide the background when the table has data
+                emptyTableBackgroundView?.hide()
+                tableView.separatorStyle = .SingleLine
+                editBarButtonItem.enabled = true
+                return 1;
             }
             else {
                 // Hide the background when the table has data
@@ -123,9 +140,10 @@ class CollectionListViewController: UITableViewController {
                 if (indexPath.row > 0) {
                     if ((scrapbookModel!.deleteCollection(collections![indexPath.row - 1]))) {
                         collections!.removeAtIndex(indexPath.row - 1)
+                        clippings = scrapbookModel?.fetchAllClippings();
                         
                         var deleteIndexPaths = [NSIndexPath]()
-                        if (collections!.count == 0) {
+                        if (collections!.count == 0 && clippings!.count == 0) {
                             // Remove the "All Clippings" cell when there's nothing in the collections array
                             deleteIndexPaths.append(NSIndexPath(forRow: 0, inSection: 0))
                             // Make the table become non-editing
@@ -243,18 +261,19 @@ class CollectionListViewController: UITableViewController {
         
         // Create index path for rows to be inserted
         var insertIndexPaths = [NSIndexPath]()
-        if (self.collections?.count > 1) {
-            // Adds only one row if the 'All Clippings' row exists
-            let indexPath = NSIndexPath(forRow: self.collections!.count, inSection: 0)
-            insertIndexPaths.append(indexPath)
-        }
-        else if (self.collections?.count == 1) {
+        if (self.collections?.count == 1 && self.clippings?.count == 0) {
             // Adds two rows, including the 'All Clipping' row
             let allClippingRowindexPath = NSIndexPath(forRow: 0, inSection: 0)
             insertIndexPaths.append(allClippingRowindexPath)
             let newRowIndexPath = NSIndexPath(forRow: 1, inSection: 0)
             insertIndexPaths.append(newRowIndexPath)
         }
+        else {
+            // Adds only one row if the 'All Clippings' row exists
+            let indexPath = NSIndexPath(forRow: self.collections!.count, inSection: 0)
+            insertIndexPaths.append(indexPath)
+        }
+        
         
         self.tableView.insertRowsAtIndexPaths(insertIndexPaths, withRowAnimation: .Automatic)
     }

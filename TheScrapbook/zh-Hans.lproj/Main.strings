@@ -1,0 +1,30 @@
+
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "9Z2-Ho-kbu"; */
+"9Z2-Ho-kbu.title" = "Edit";
+
+/* Class = "UIBarButtonItem"; title = "New Clipping"; ObjectID = "Agg-2o-t8h"; */
+"Agg-2o-t8h.title" = "New Clipping";
+
+/* Class = "UILabel"; text = "Collection"; ObjectID = "Hz5-RO-BY4"; */
+"Hz5-RO-BY4.text" = "Collection";
+
+/* Class = "UITextView"; text = "Type your notes here "; ObjectID = "TKH-a0-OXQ"; */
+"TKH-a0-OXQ.text" = "Type your notes here ";
+
+/* Class = "UIBarButtonItem"; title = "New Collection"; ObjectID = "Te4-cl-5sM"; */
+"Te4-cl-5sM.title" = "New Collection";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "h1s-NX-4xc"; */
+"h1s-NX-4xc.text" = "Label";
+
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "prg-uW-8cH"; */
+"prg-uW-8cH.title" = "Edit";
+
+/* Class = "UILabel"; text = "Created on 22/04/2016 20:00"; ObjectID = "tQm-b7-fke"; */
+"tQm-b7-fke.text" = "Created on 22/04/2016 20:00";
+
+/* Class = "UINavigationItem"; title = "Clippings"; ObjectID = "wrI-fq-Z9U"; */
+"wrI-fq-Z9U.title" = "Clippings";
+
+/* Class = "UINavigationItem"; title = "Collections"; ObjectID = "xVe-gD-KlB"; */
+"xVe-gD-KlB.title" = "Collections";

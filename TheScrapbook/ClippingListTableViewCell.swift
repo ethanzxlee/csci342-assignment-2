@@ -19,6 +19,9 @@ class ClippingListTableViewCell: UITableViewCell {
         let backgroundView = UIView()
         backgroundView.backgroundColor = UIColor(red: 0xE8 / 255, green: 0xE3 / 255, blue: 0xFE / 255, alpha: 1)
         self.selectedBackgroundView = backgroundView
+        
+        self.clippingImageView.layer.cornerRadius = 24
+        self.clippingImageView.layer.masksToBounds = true
     }
 
    

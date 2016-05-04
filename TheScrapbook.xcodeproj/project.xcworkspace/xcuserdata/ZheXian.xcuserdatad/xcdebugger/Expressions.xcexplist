@@ -3,10 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "CollectionListViewController.tableView(UITableView, commitEditingStyle : UITableViewCellEditingStyle, forRowAtIndexPath : NSIndexPath) -&gt; ():CollectionListViewController.swift">
+         contextName = "ClippingDetailViewController.prepareForSegue(UIStoryboardSegue, sender : AnyObject?) -&gt; ():ClippingDetailViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "collections">
+               value = "segue.destinationContoller">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -15,6 +15,14 @@
          <PersistentStrings>
             <PersistentString
                value = "self.view">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CollectionListViewController.tableView(UITableView, commitEditingStyle : UITableViewCellEditingStyle, forRowAtIndexPath : NSIndexPath) -&gt; ():CollectionListViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "collections">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

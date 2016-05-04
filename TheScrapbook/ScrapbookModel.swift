@@ -5,6 +5,9 @@
 //  Created by Zhe Xian Lee on 18/04/2016.
 //  Copyright © 2016 Zhe Xian Lee. All rights reserved.
 //
+//  References:
+//  Resize Image - http://nshipster.com/image-resizing/
+//
 
 import UIKit
 import CoreData
@@ -88,8 +91,20 @@ class ScrapbookModel {
         // Create filename by using epoch time
         let epochTime = UInt64(NSDate().timeIntervalSince1970 * 1000)
         let imageFilename = "\(epochTime).jpg"
-    
+        
+        // Thumbnail
+        let thumbnailSize = CGSize(width: 50, height: 50);
+        UIGraphicsBeginImageContextWithOptions(thumbnailSize, false, 0.0)
+        image.drawInRect(CGRect(origin: CGPointZero, size: thumbnailSize))
+
+        let thumbnailImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
         // Appending the filename to the document directory
+        guard let thumbnailUrl = self.documentDirectory?.URLByAppendingPathComponent(imageFilename + ".thumb") else {
+            return nil;
+        }
+
         guard let imageUrl = self.documentDirectory?.URLByAppendingPathComponent(imageFilename) else {
             return nil
         }
@@ -98,9 +113,17 @@ class ScrapbookModel {
         guard let imageJpegRepresentation = UIImageJPEGRepresentation(image, 0.8) else {
             return nil
         }
+        
+        guard let thumbnailJpegRepresentation = UIImageJPEGRepresentation(thumbnailImage, 0.8) else {
+            return nil
+        }
     
         // Writes the JPEG file to disk
         if (!imageJpegRepresentation.writeToURL(imageUrl, atomically: true)) {
+            return nil
+        }
+        
+        if (!thumbnailJpegRepresentation.writeToURL(thumbnailUrl, atomically: true)) {
             return nil
         }
     
@@ -109,12 +132,13 @@ class ScrapbookModel {
             // Deletes the JPEG file wrote to disk if the Clipping entity was failed to create
             do {
                 try NSFileManager.defaultManager().removeItemAtURL(imageUrl)
+                try NSFileManager.defaultManager().removeItemAtURL(thumbnailUrl)
             }
             catch {}
             return nil
         }
         
-        clipping.image = imageUrl.path
+        clipping.image = imageFilename
         clipping.note = notes
         clipping.dateCreated = NSDate()
         
@@ -125,6 +149,7 @@ class ScrapbookModel {
             // Deletes the JPEG file wrote to disk if the context was failed to save
             do {
                 try NSFileManager.defaultManager().removeItemAtURL(imageUrl)
+                try NSFileManager.defaultManager().removeItemAtURL(thumbnailUrl)
             }
             catch {}
             return nil
@@ -210,7 +235,8 @@ class ScrapbookModel {
             for clipping in clippings {
                 if let _clipping = clipping as? Clipping {
                     if let _image = _clipping.image {
-                        imageFiles.append(NSURL(fileURLWithPath: _image))
+                        imageFiles.append((self.documentDirectory?.URLByAppendingPathComponent(_image))!)
+                        imageFiles.append((self.documentDirectory?.URLByAppendingPathComponent(_image + ".thumb"))!)
                     }
                 }
             }
@@ -242,8 +268,10 @@ class ScrapbookModel {
     func deleteClipping(clipping: Clipping) -> Bool {
         // Gets the image file URL so that it can be deleted after the record in DB is deleted
         var imageFileURL: NSURL?
+        var thumbnailFileURL: NSURL?
         if let _image = clipping.image {
-            imageFileURL = NSURL(fileURLWithPath: _image)
+            imageFileURL = self.documentDirectory?.URLByAppendingPathComponent(_image)
+            thumbnailFileURL = self.documentDirectory?.URLByAppendingPathComponent(_image + ".thumb")
         }
         
         managedObjectContext?.deleteObject(clipping)
@@ -252,6 +280,9 @@ class ScrapbookModel {
             try managedObjectContext?.save()
             if let _imageFileURL = imageFileURL {
                 try NSFileManager.defaultManager().removeItemAtURL(_imageFileURL)
+            }
+            if let _thumbnailFileURL = thumbnailFileURL {
+                try NSFileManager.defaultManager().removeItemAtURL(_thumbnailFileURL)
             }
         }
         catch {

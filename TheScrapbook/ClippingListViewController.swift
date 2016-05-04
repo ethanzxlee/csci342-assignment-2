@@ -13,6 +13,7 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
     let scrapbookModel = ScrapbookModel.defaultModel
     var collection: Collection?
     var clippings = [Clipping]()
+    var documentDirectory : NSURL?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,9 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
                 clippings.appendContentsOf(fetchedClippings)
             }
         }
+        
+        documentDirectory = NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).first
+        
         
     }
     
@@ -64,9 +68,10 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
                 guard let cell = tableView.dequeueReusableCellWithIdentifier("ClippingListTableViewCell") as? ClippingListTableViewCell else {
                     return UITableViewCell()
                 }
-                print(clippings[indexPath.row].image!)
                 
-                cell.clippingImageView.image = UIImage(contentsOfFile: clippings[indexPath.row].image!)
+                let imageURL = documentDirectory?.URLByAppendingPathComponent(clippings[indexPath.row].image! + ".thumb")
+                
+                cell.clippingImageView.image = UIImage(contentsOfFile: imageURL!.path!)
                 cell.clippingNoteLabel?.text = clippings[indexPath.row].note
                 
                 return cell
