@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ClippingDetailViewController: UIViewController, UIScrollViewDelegate {
+class ClippingDetailViewController: UIViewController, UIScrollViewDelegate, UITextViewDelegate {
     
     let scrapbookModel = ScrapbookModel.defaultModel
     
@@ -16,8 +16,11 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate {
     var clipping: Clipping?
     var image: UIImage?
     var imageViewFullscreen = false
+    var shouldSave = true
+    var shouldDelete = false
+    var noteTextViewEdited = false
     
-    
+    @IBOutlet weak var doneBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var deleteBarButtonItem: UIBarButtonItem!
     
     @IBOutlet weak var imageView: UIImageView!
@@ -28,7 +31,7 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
-
+    
     
     @IBOutlet weak var createdDateLabel: UILabel!
     @IBOutlet weak var dateCreatedLabelZeroHeightConstraint: NSLayoutConstraint!
@@ -47,15 +50,25 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate {
         
         // Preparation
         if (clipping != nil) {
+            let imageURL = scrapbookModel?.documentDirectory?.URLByAppendingPathComponent(clipping!.image!)
+            self.image = UIImage(contentsOfFile: (imageURL?.path)!)
+            
             noteTextView.text = clipping?.note
+            deleteBarButtonItem.title = NSLocalizedString("Delete", comment: "Delete")
         }
+        else {
+            // Manually put placeholder for text view
+            noteTextView.text = NSLocalizedString("Type your note here", comment: "Type your note here")
+            deleteBarButtonItem.title = NSLocalizedString("Cancel", comment: "Cancel")
+            noteTextView.textColor = UIColor(red: 0x4D / 255, green: 0x34 / 255, blue: 0x6C / 255, alpha: 0.3)
+        }
+        noteTextView.delegate = self
+        
         
         // Setup the image view
-        imageView.image = image
+        imageView.image = self.image
         imageView.userInteractionEnabled = true
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "didTapImageView:"))
-        
-        
     }
     
     
@@ -65,7 +78,7 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate {
         registerForKeyboardNotifications()
     }
     
-
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -76,7 +89,36 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate {
     override func prefersStatusBarHidden() -> Bool {
         return imageViewFullscreen
     }
-
+    
+    
+    // MARK: - UITextViewDelegate 
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if (textView == noteTextView) {
+            if (clipping == nil) {
+                if (!noteTextViewEdited) {
+                    noteTextView.text = ""
+                    noteTextView.textColor = UIColor(red: 0x4D / 255, green: 0x34 / 255, blue: 0x6C / 255, alpha: 1)
+                }
+            }
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if (textView == noteTextView) {
+            if (clipping == nil) {
+                if (noteTextView.text == "") {
+                    noteTextView.text = NSLocalizedString("Type your note here", comment: "Type your note here")
+                    noteTextView.textColor = UIColor(red: 0x4D / 255, green: 0x34 / 255, blue: 0x6C / 255, alpha: 0.3)
+                    noteTextViewEdited = false;
+                }
+                else {
+                    noteTextViewEdited = true;
+                }
+            }
+        }
+    }
+    
     
     // MARK: - UIScrollViewDelegate
     
@@ -87,8 +129,22 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate {
     
     // MARK: - IBActions
     
-    @IBOutlet weak var didTouchDeleteBarButtonItem: UIBarButtonItem!
-
+    @IBAction func didTouchBarButtonItem(sender: UIBarButtonItem) {
+        shouldSave = true;
+        shouldDelete = false;
+    
+        noteTextView.resignFirstResponder()
+        performSegueWithIdentifier("UnwindToClippingListViewSegue", sender: nil)
+    }
+    
+    
+    @IBAction func didTouchDeletBarButtonItem(sender: AnyObject) {
+        shouldSave = false;
+        shouldDelete = true;
+        
+        performSegueWithIdentifier("UnwindToClippingListViewSegue", sender: nil)
+    }
+    
     
     // MARK: - Gesture Recogniser
     
@@ -106,27 +162,60 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let clippingListViewController = segue.destinationViewController as? ClippingListViewController {
-           
-            guard let image = image else {
-                return
-            }
-            
-            if (clipping == nil) {
-                if let newClipping = scrapbookModel?.createClippingWithNotes(noteTextView.text, image: image) {
-                    clippingListViewController.clippings.append(newClipping)
+            if (shouldSave) {
+                guard let image = image else {
+                    return
+                }
+                
+                // If it's a new clipping
+                if (clipping == nil) {
+                    var noteText = "";
                     
-                    if (collection != nil) {
-                        scrapbookModel?.addClipping(newClipping, toCollection: collection!)
+                    if (noteTextViewEdited) {
+                        noteText = noteTextView.text
+                    }
+                    
+                    if let newClipping = scrapbookModel?.createClippingWithNotes(noteText, image: image) {
+                        // It it belongs to a collection
+                        if (collection != nil) {
+                            scrapbookModel?.addClipping(newClipping, toCollection: collection!)
+                        }
+                        
+                        // Reload the clippings array
+                        if (self.collection == nil) {
+                            clippingListViewController.clippings = (scrapbookModel?.fetchAllClippings())!
+                        }
+                        else {
+                            clippingListViewController.clippings = (scrapbookModel?.fetchAllClippingsInCollection(self.collection!))!
+                        }
                     }
                 }
+                // otherwise update the existing clipping
                 else {
-                    // TODO: update the clipping
-                    
+
                 }
                 
-                
+                // Reload the list
                 clippingListViewController.tableView.reloadData()
             }
+            else if (shouldDelete) {
+                // Only delete if the clipping has already been saved
+                // Do nothing if it has not been saved yet, just don't save it
+                if let _clipping = clipping {
+                    scrapbookModel?.deleteClipping(_clipping)
+                    
+                    // Reload the clippings array
+                    if (self.collection == nil) {
+                        clippingListViewController.clippings = (scrapbookModel?.fetchAllClippings())!
+                    }
+                    else {
+                        clippingListViewController.clippings = (scrapbookModel?.fetchAllClippingsInCollection(self.collection!))!
+                    }
+                    
+                    clippingListViewController.tableView.reloadData()
+                }
+            }
+            
         }
     }
     
@@ -214,11 +303,11 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate {
     }
     
     
-
-   
-
     
-
+    
+    
+    
+    
     
     
     

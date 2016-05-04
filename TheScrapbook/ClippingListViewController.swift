@@ -14,10 +14,27 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
     var collection: Collection?
     var clippings = [Clipping]()
     var documentDirectory : NSURL?
+    var selectedImage: UIImage?
+    
+    let emptyTableImage = UIImage(named: "empty-clipping")
+    let emptyTableMessage = NSLocalizedString("You don't have any clipping yet.", comment: "Empty clipping message")
+    var emptyTableBackgroundView: EmptyTableViewBackgroundView?
 
+    @IBOutlet weak var editBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var newClippingBarButtonItem: UIBarButtonItem!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setToolbarHidden(false, animated: true)
+        tableView.editing = false
         
+        // Setup the background that will be used when the table is empty
+        emptyTableBackgroundView = EmptyTableViewBackgroundView(image: emptyTableImage, message: emptyTableMessage)
+        tableView.backgroundView = emptyTableBackgroundView
+        
+        // Hides the dividers for empty cells
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
     
         if (collection == nil) {
             if let allClippings = scrapbookModel?.fetchAllClippings() {
@@ -35,6 +52,7 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
         
     }
     
+    
     // MARK: - UITableViewController
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -46,11 +64,26 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
         }
     }
 
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (tableView == self.tableView) {
             switch (section) {
             case 0:
-                return clippings.count
+                if (clippings.count == 0) {
+                    // Show the background when the table is empty
+                    emptyTableBackgroundView?.show()
+                    tableView.separatorStyle = .None
+                    editBarButtonItem.enabled = false
+                    return 0
+                }
+                else {
+                    // Hide the background when the table has data
+                    emptyTableBackgroundView?.hide()
+                    tableView.separatorStyle = .SingleLine
+                    editBarButtonItem.enabled = true
+                    return clippings.count
+                }
+                
             default:
                 return 0
             }
@@ -59,6 +92,7 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
             return 0
         }
     }
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (tableView == self.tableView) {
@@ -70,7 +104,7 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
                 }
                 
                 let imageURL = documentDirectory?.URLByAppendingPathComponent(clippings[indexPath.row].image! + ".thumb")
-                
+
                 cell.clippingImageView.image = UIImage(contentsOfFile: imageURL!.path!)
                 cell.clippingNoteLabel?.text = clippings[indexPath.row].note
                 
@@ -86,27 +120,51 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
     }
     
     
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (tableView == self.tableView) {
+        switch (editingStyle) {
+            case .Delete:
+                switch (indexPath.section) {
+                case 0:
+                    if ((scrapbookModel!.deleteClipping(self.clippings[indexPath.row]))) {
+                        self.clippings.removeAtIndex(indexPath.row)
+                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                        
+                        if (self.clippings.count == 0) {
+                            toogleTableEditing()
+                        }
+                    }
+                    
+                default:
+                    return
+                }
+            default:
+                return
+            }
+        }
+    }
+    
+    
     // MARK: - UIImagePickerControllerDelegate
 
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
         dismissViewControllerAnimated(true, completion: {
-            self.performSegueWithIdentifier("ShowClippingDetailViewController", sender: self)
+            self.performSegueWithIdentifier("ShowNewClippingDetailViewController", sender: self)
         })
         
     }
-    
-    var selectedImage: UIImage?
     
     
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "ShowClippingDetailViewController") {
+        if (segue.identifier == "ShowNewClippingDetailViewController") {
             guard let clippingDetailNavController = segue.destinationViewController as? UINavigationController else {
                 return
             }
@@ -118,7 +176,26 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
             clippingDetailViewController.collection = self.collection
             clippingDetailViewController.image = self.selectedImage
         }
+        else if (segue.identifier == "ShowClippingDetailViewController") {
+            guard let selectedIndexPath = tableView.indexPathForSelectedRow else {
+                return
+            }
+            
+            if (selectedIndexPath.section == 0) {
+                guard let clippingDetailNavController = segue.destinationViewController as? UINavigationController else {
+                    return
+                }
+                
+                guard let clippingDetailViewController = clippingDetailNavController.childViewControllers.first as? ClippingDetailViewController else {
+                    return
+                }
+                
+                clippingDetailViewController.clipping =  clippings[selectedIndexPath.row]
+                clippingDetailViewController.collection = self.collection
+            }
+        }
     }
+
     
     @IBAction func unwindToClippingListViewController(segue: UIStoryboardSegue) {
         
@@ -131,6 +208,11 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
        presentNewClippingActionSheet()
     }
 
+    
+    @IBAction func didTouchEditBarButtonItem(sender: UIBarButtonItem) {
+        toogleTableEditing()
+    }
+    
     
     // MARK: - Functions
     
@@ -163,6 +245,7 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
         
         presentViewController(alert, animated: true, completion: nil)
     }
+    
 
     /**
         Present image picker with the specified type
@@ -179,6 +262,25 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
         self.presentViewController(picker, animated: true, completion: nil)
     }
     
+    
+    /**
+     Toogle the table editing status. If the table is editing, then calling this
+     will make the table become non-editing and vice versa.
+     */
+    func toogleTableEditing() {
+        if (tableView.editing) {
+            editBarButtonItem.title = NSLocalizedString("Edit", comment: "Edit")
+            newClippingBarButtonItem.enabled = true
+            navigationController?.setToolbarHidden(false, animated: true)
+            tableView.setEditing(false, animated: true)
+        }
+        else {
+            editBarButtonItem.title = NSLocalizedString("Done", comment: "Done")
+            newClippingBarButtonItem.enabled = false
+            navigationController?.setToolbarHidden(true, animated: true)
+            tableView.setEditing(true, animated: true)
+        }
+    }
     
     
 }
