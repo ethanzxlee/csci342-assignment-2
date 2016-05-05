@@ -40,9 +40,6 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate, UITe
     @IBOutlet weak var noteTextViewZeroHeightConstraint: NSLayoutConstraint!
     
     
-    // TODO: Display created date
-    // TODO: Update clipping
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,6 +56,7 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate, UITe
             self.createdDateLabel.text = NSDateFormatter.localizedStringFromDate(clipping!.dateCreated!, dateStyle: .MediumStyle, timeStyle: .ShortStyle)
             
             noteTextView.text = clipping?.note
+            noteTextView.editable = false
             deleteBarButtonItem.title = NSLocalizedString("Delete", comment: "Delete")
         }
         else {
@@ -68,8 +66,9 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate, UITe
             noteTextView.textColor = UIColor(red: 0x4D / 255, green: 0x34 / 255, blue: 0x6C / 255, alpha: 0.3)
             self.createdDateLabel.alpha = 0;
         }
-        noteTextView.delegate = self
         
+        noteTextView.delegate = self
+        noteTextView.tintColor = UIColor(red: 0x4D / 255, green: 0x36 / 255, blue: 0x6C / 255, alpha: 1)
         
         // Setup the image view
         imageView.image = self.image
@@ -195,10 +194,6 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate, UITe
                             clippingListViewController.clippings = (scrapbookModel?.fetchAllClippingsInCollection(self.collection!))!
                         }
                     }
-                }
-                // otherwise update the existing clipping
-                else {
-
                 }
                 
                 // Reload the list

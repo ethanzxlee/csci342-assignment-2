@@ -13,6 +13,7 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
     let scrapbookModel = ScrapbookModel.defaultModel
     var collection: Collection?
     var clippings = [Clipping]()
+    var searchedClippings = [Clipping]()
     var documentDirectory : NSURL?
     var selectedImage: UIImage?
     
@@ -22,9 +23,8 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
 
     @IBOutlet weak var editBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var newClippingBarButtonItem: UIBarButtonItem!
+    var searchController = UISearchController(searchResultsController: nil)
     
-    // TODO: Display created date
-    // TODO: Search filter
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,14 +51,35 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
         
         documentDirectory = NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).first
         
+        self.searchController.searchResultsUpdater = self
+        self.searchController.searchBar.sizeToFit()
+        self.searchController.searchBar.searchBarStyle = .Minimal
+        self.searchController.searchBar.tintColor = UIColor(red: 0x4D / 255, green: 0x36 / 255, blue: 0x6C / 255, alpha: 1)
+        self.searchController.searchBar.barTintColor = UIColor(red: 0x4D / 255, green: 0x36 / 255, blue: 0x6C / 255, alpha: 1)
+
         
+        self.searchController.dimsBackgroundDuringPresentation = false
+
+
+
+        self.tableView.tableHeaderView = self.searchController.searchBar
     }
     
     
     // MARK: - UISearchResultsUpdating
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
+        if (collection == nil) {
+            if let result = scrapbookModel?.searchClippingContainsNote(searchController.searchBar.text!) {
+                searchedClippings = result
+            }
+        }
+        else {
+            if let result = scrapbookModel?.searchClippingContainsNote(searchController.searchBar.text!, inCollection: collection!) {
+                searchedClippings = result
+            }
+        }
+        self.tableView.reloadData()
     }
     
     
@@ -78,19 +99,24 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
         if (tableView == self.tableView) {
             switch (section) {
             case 0:
-                if (clippings.count == 0) {
-                    // Show the background when the table is empty
-                    emptyTableBackgroundView?.show()
-                    tableView.separatorStyle = .None
-                    editBarButtonItem.enabled = false
-                    return 0
+                if (self.searchController.active || searchController.searchBar.text != "") {
+                    return searchedClippings.count;
                 }
                 else {
-                    // Hide the background when the table has data
-                    emptyTableBackgroundView?.hide()
-                    tableView.separatorStyle = .SingleLine
-                    editBarButtonItem.enabled = true
-                    return clippings.count
+                    if (clippings.count == 0) {
+                        // Show the background when the table is empty
+                        emptyTableBackgroundView?.show()
+                        tableView.separatorStyle = .None
+                        editBarButtonItem.enabled = false
+                        return 0
+                    }
+                    else {
+                        // Hide the background when the table has data
+                        emptyTableBackgroundView?.hide()
+                        tableView.separatorStyle = .SingleLine
+                        editBarButtonItem.enabled = true
+                        return clippings.count
+                    }
                 }
                 
             default:
@@ -112,11 +138,18 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
                     return UITableViewCell()
                 }
                 
-                let imageURL = documentDirectory?.URLByAppendingPathComponent(clippings[indexPath.row].image! + ".thumb")
-
-                cell.clippingImageView.image = UIImage(contentsOfFile: imageURL!.path!)
-                cell.clippingNoteLabel.text = clippings[indexPath.row].note
-                cell.clippingDateLabel.text = NSDateFormatter.localizedStringFromDate(clippings[indexPath.row].dateCreated!, dateStyle: .MediumStyle, timeStyle: .ShortStyle)
+                if (searchController.active || searchController.searchBar.text != "") {
+                    let imageURL = documentDirectory?.URLByAppendingPathComponent(searchedClippings[indexPath.row].image! + ".thumb")
+                    cell.clippingImageView.image = UIImage(contentsOfFile: imageURL!.path!)
+                    cell.clippingNoteLabel.text = searchedClippings[indexPath.row].note
+                    cell.clippingDateLabel.text = NSDateFormatter.localizedStringFromDate(searchedClippings[indexPath.row].dateCreated!, dateStyle: .MediumStyle, timeStyle: .ShortStyle)
+                }
+                else {
+                    let imageURL = documentDirectory?.URLByAppendingPathComponent(clippings[indexPath.row].image! + ".thumb")
+                    cell.clippingImageView.image = UIImage(contentsOfFile: imageURL!.path!)
+                    cell.clippingNoteLabel.text = clippings[indexPath.row].note
+                    cell.clippingDateLabel.text = NSDateFormatter.localizedStringFromDate(clippings[indexPath.row].dateCreated!, dateStyle: .MediumStyle, timeStyle: .ShortStyle)
+                }
                 
                 return cell
                 
@@ -200,7 +233,12 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
                     return
                 }
                 
-                clippingDetailViewController.clipping =  clippings[selectedIndexPath.row]
+                if (self.searchController.active || searchController.searchBar.text != "") {
+                    clippingDetailViewController.clipping = searchedClippings[selectedIndexPath.row]
+                }
+                else {
+                    clippingDetailViewController.clipping =  clippings[selectedIndexPath.row]
+                }
                 clippingDetailViewController.collection = self.collection
             }
         }
