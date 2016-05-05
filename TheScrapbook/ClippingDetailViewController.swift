@@ -40,6 +40,9 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate, UITe
     @IBOutlet weak var noteTextViewZeroHeightConstraint: NSLayoutConstraint!
     
     
+    // TODO: Display created date
+    // TODO: Update clipping
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,8 +53,10 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate, UITe
         
         // Preparation
         if (clipping != nil) {
+            // Set things up if it is displaying an existing clipping
             let imageURL = scrapbookModel?.documentDirectory?.URLByAppendingPathComponent(clipping!.image!)
             self.image = UIImage(contentsOfFile: (imageURL?.path)!)
+            self.createdDateLabel.text = NSDateFormatter.localizedStringFromDate(clipping!.dateCreated!, dateStyle: .MediumStyle, timeStyle: .ShortStyle)
             
             noteTextView.text = clipping?.note
             deleteBarButtonItem.title = NSLocalizedString("Delete", comment: "Delete")
@@ -61,6 +66,7 @@ class ClippingDetailViewController: UIViewController, UIScrollViewDelegate, UITe
             noteTextView.text = NSLocalizedString("Type your note here", comment: "Type your note here")
             deleteBarButtonItem.title = NSLocalizedString("Cancel", comment: "Cancel")
             noteTextView.textColor = UIColor(red: 0x4D / 255, green: 0x34 / 255, blue: 0x6C / 255, alpha: 0.3)
+            self.createdDateLabel.alpha = 0;
         }
         noteTextView.delegate = self
         

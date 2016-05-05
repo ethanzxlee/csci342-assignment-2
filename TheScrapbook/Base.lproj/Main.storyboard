@@ -107,22 +107,46 @@
                                                 <constraint firstAttribute="width" constant="48" id="vTr-qq-fOv"/>
                                             </constraints>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhG-ef-cK3">
+                                            <rect key="frame" x="74" y="37" width="485" height="14"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="14" id="Yat-Lc-p0w"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                            <color key="textColor" red="0.45882352939999999" green="0.33725490200000002" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1s-NX-4xc">
-                                            <rect key="frame" x="74" y="21" width="485" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <rect key="frame" x="74" y="13" width="485" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="BIh-fj-o10"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" red="0.3030913174" green="0.2038355023" blue="0.42423218489999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="bhG-ef-cK3" secondAttribute="trailing" id="1Wf-lm-5Pd"/>
                                         <constraint firstItem="KN4-OO-8Wz" firstAttribute="centerY" secondItem="mox-Nj-Nwf" secondAttribute="centerY" id="CLs-OI-tRq"/>
                                         <constraint firstItem="h1s-NX-4xc" firstAttribute="centerY" secondItem="mox-Nj-Nwf" secondAttribute="centerY" id="J4N-Cg-8y8"/>
+                                        <constraint firstItem="h1s-NX-4xc" firstAttribute="top" secondItem="mox-Nj-Nwf" secondAttribute="topMargin" constant="10" id="SnL-Nh-qgY"/>
+                                        <constraint firstItem="bhG-ef-cK3" firstAttribute="top" secondItem="h1s-NX-4xc" secondAttribute="bottom" constant="4" id="XhW-o0-4PV"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="h1s-NX-4xc" secondAttribute="trailing" id="r2G-yX-E9M"/>
                                         <constraint firstItem="KN4-OO-8Wz" firstAttribute="leading" secondItem="mox-Nj-Nwf" secondAttribute="leadingMargin" constant="8" id="s6u-3G-pNx"/>
+                                        <constraint firstItem="bhG-ef-cK3" firstAttribute="leading" secondItem="KN4-OO-8Wz" secondAttribute="trailing" constant="10" id="wuk-vW-gS6"/>
+                                        <constraint firstItem="h1s-NX-4xc" firstAttribute="centerY" secondItem="mox-Nj-Nwf" secondAttribute="centerY" constant="-9" id="zKz-gl-Xb3"/>
                                         <constraint firstItem="h1s-NX-4xc" firstAttribute="leading" secondItem="KN4-OO-8Wz" secondAttribute="trailing" constant="10" id="zzm-bA-Mb3"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="J4N-Cg-8y8"/>
+                                            <exclude reference="SnL-Nh-qgY"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="clippingDateLabel" destination="bhG-ef-cK3" id="3kB-Zj-FMb"/>
                                     <outlet property="clippingImageView" destination="KN4-OO-8Wz" id="a80-zm-nLq"/>
                                     <outlet property="clippingNoteLabel" destination="h1s-NX-4xc" id="a1S-73-rT7"/>
                                     <segue destination="hxf-Ev-S2i" kind="showDetail" identifier="ShowClippingDetailViewController" id="PdS-nC-eIY"/>

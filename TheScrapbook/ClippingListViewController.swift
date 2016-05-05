@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ClippingListViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ClippingListViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UISearchResultsUpdating {
     
     let scrapbookModel = ScrapbookModel.defaultModel
     var collection: Collection?
@@ -23,6 +23,8 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
     @IBOutlet weak var editBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var newClippingBarButtonItem: UIBarButtonItem!
     
+    // TODO: Display created date
+    // TODO: Search filter
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +51,13 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
         
         documentDirectory = NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).first
         
+        
+    }
+    
+    
+    // MARK: - UISearchResultsUpdating
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
         
     }
     
@@ -106,7 +115,8 @@ class ClippingListViewController: UITableViewController, UIImagePickerController
                 let imageURL = documentDirectory?.URLByAppendingPathComponent(clippings[indexPath.row].image! + ".thumb")
 
                 cell.clippingImageView.image = UIImage(contentsOfFile: imageURL!.path!)
-                cell.clippingNoteLabel?.text = clippings[indexPath.row].note
+                cell.clippingNoteLabel.text = clippings[indexPath.row].note
+                cell.clippingDateLabel.text = NSDateFormatter.localizedStringFromDate(clippings[indexPath.row].dateCreated!, dateStyle: .MediumStyle, timeStyle: .ShortStyle)
                 
                 return cell
                 

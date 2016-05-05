@@ -12,6 +12,7 @@ class ClippingListTableViewCell: UITableViewCell {
 
     @IBOutlet weak var clippingImageView: UIImageView!
     @IBOutlet weak var clippingNoteLabel: UILabel!
+    @IBOutlet weak var clippingDateLabel: UILabel!
     
     
     override func awakeFromNib() {
