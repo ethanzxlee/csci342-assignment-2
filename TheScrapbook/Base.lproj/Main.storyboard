@@ -83,18 +83,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" id="pbK-Hm-H4U">
-                            <rect key="frame" x="0.0" y="64" width="600" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <color key="barTintColor" red="0.3030913174" green="0.2038355023" blue="0.42423218489999998" alpha="1" colorSpace="calibratedRGB"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="p8y-7d-GTb" id="3OC-BA-9n2"/>
-                            </connections>
-                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ClippingListTableViewCell" id="2g5-ek-g1Q" customClass="ClippingListTableViewCell" customModule="TheScrapbook" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="136" width="600" height="64"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2g5-ek-g1Q" id="mox-Nj-Nwf">
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="63"/>
@@ -161,6 +152,7 @@
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="0KY-uI-R92"/>
                         <barButtonItem title="New Clipping" id="Agg-2o-t8h">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="didTouchNewClippingButton:" destination="p8y-7d-GTb" id="LVA-zz-jTH"/>
                             </connections>
@@ -177,20 +169,10 @@
                     <connections>
                         <outlet property="editBarButtonItem" destination="9Z2-Ho-kbu" id="ztW-O5-AJa"/>
                         <outlet property="newClippingBarButtonItem" destination="Agg-2o-t8h" id="Vu7-Yj-WlH"/>
-                        <outlet property="searchDisplayController" destination="xEn-cT-rXy" id="Y4K-Dg-kl7"/>
                         <segue destination="hxf-Ev-S2i" kind="showDetail" identifier="ShowNewClippingDetailViewController" action="showViewController:sender:" id="S0G-Lt-3rI"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rIS-Tu-Whh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="xEn-cT-rXy">
-                    <connections>
-                        <outlet property="delegate" destination="p8y-7d-GTb" id="fVj-Ud-lly"/>
-                        <outlet property="searchBar" destination="pbK-Hm-H4U" id="eX5-rn-z7h"/>
-                        <outlet property="searchContentsController" destination="p8y-7d-GTb" id="jzh-r0-hov"/>
-                        <outlet property="searchResultsDataSource" destination="p8y-7d-GTb" id="agK-ml-kJj"/>
-                        <outlet property="searchResultsDelegate" destination="p8y-7d-GTb" id="uz5-AW-cpk"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="2523" y="405"/>
         </scene>
